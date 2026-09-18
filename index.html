@@ -14,8 +14,7 @@
       --surface:#ffffff;
       --surface-alt:#f1f3f5;
       --raised:#e9ecef;
-      --line:#dee2e6;script
-      
+      --line:#dee2e6;
       --ink:#212529;
       --muted:#6c757d;
       --faint:#adb5bd;
@@ -931,27 +930,73 @@
       font-size:10.5px; font-weight:700; background:var(--gold-dim); color:var(--gold);
       border:1px dashed var(--gold); vertical-align:middle;
     }
-    #otSummaryTable td:nth-child(2){ font-weight:600; }
+
+    /* ===== OT PAGE (redesigned) ===== */
+    .ot-hero{
+      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+      margin-bottom:28px;
+    }
+    .ot-hero-title{
+      font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--ink);
+      letter-spacing:-0.5px;
+    }
+    .ot-hero-sub{ font-size:14px; color:var(--muted); margin-top:6px; }
+    .ot-add-btn{
+      background:var(--emerald); color:#fff; border:none; border-radius:10px;
+      padding:13px 24px; font-size:14px; font-weight:600; font-family:var(--font-body);
+      cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+      box-shadow:0 4px 14px rgba(11,122,95,0.28); transition:all .15s ease;
+    }
+    .ot-add-btn:hover{ opacity:0.92; transform:translateY(-1px); }
+    .ot-add-btn:active{ transform:translateY(0); }
+
     #otSummaryTable td:nth-child(3),
-    #otSummaryTable td:nth-child(4){ text-align:right; }
+    #otSummaryTable td:nth-child(4),
+    #otSummaryTable td:nth-child(5){ text-align:right; }
     #otSummaryTable tfoot td{
       font-weight:700; background:var(--surface-alt); border-top:2px solid var(--line);
     }
-    .ot-submit-btn{
-      align-self:flex-end;
-      background:var(--emerald);
-      border:1px solid var(--emerald);
-      color:#fff;
-      border-radius:8px;
-      padding:11px 22px;
-      font-size:13.5px;
-      font-family:var(--font-body);
-      font-weight:600;
-      cursor:pointer;
+    #otSummaryTable .ot-agent-cell{
+      display:flex; align-items:center; gap:12px; min-width:0;
+    }
+    #otSummaryTable .ot-agent-cell .avatar{ width:32px; height:32px; font-size:12px; }
+
+    .ot-modal-overlay{
+      position:fixed; inset:0; background:rgba(33,37,41,0.55);
+      display:flex; align-items:center; justify-content:center; z-index:1100; padding:20px;
+    }
+    .ot-modal{
+      background:var(--surface); border-radius:var(--radius); width:100%; max-width:400px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.25); overflow:hidden;
+    }
+    .ot-modal-header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:18px 22px; border-bottom:1px solid var(--line); background:var(--surface-alt);
+    }
+    .ot-modal-title{ font-family:var(--font-display); font-weight:600; font-size:17px; color:var(--ink); }
+    .ot-modal-close{ background:none; border:none; color:var(--faint); font-size:22px; line-height:1; cursor:pointer; padding:0; }
+    .ot-modal-close:hover{ color:var(--ink); }
+    .ot-modal-body{ padding:20px 22px 8px; display:flex; flex-direction:column; gap:14px; }
+    .ot-modal-body .field{ min-width:0; }
+    .ot-modal-msg{ padding:6px 22px 4px; font-size:13px; min-height:20px; }
+    .ot-modal-msg.ok{ color:var(--emerald); font-weight:600; }
+    .ot-modal-msg.err{ color:var(--danger); font-weight:600; }
+    .ot-modal-footer{
+      display:flex; gap:10px; justify-content:flex-end; padding:16px 22px 20px;
+    }
+    .ot-modal-cancel{
+      background:transparent; border:1px solid var(--line); color:var(--muted);
+      border-radius:8px; padding:10px 18px; font-size:13.5px; font-weight:600; cursor:pointer; font-family:var(--font-body);
+      transition:all .15s ease;
+    }
+    .ot-modal-cancel:hover{ border-color:var(--ink); color:var(--ink); }
+    .ot-modal-save{
+      background:var(--emerald); border:1px solid var(--emerald); color:#fff;
+      border-radius:8px; padding:10px 22px; font-size:13.5px; font-weight:600; cursor:pointer; font-family:var(--font-body);
       transition:opacity .15s ease;
     }
-    .ot-submit-btn:hover{ opacity:0.9; }
-    .ot-submit-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+    .ot-modal-save:hover{ opacity:0.9; }
+    .ot-modal-save:disabled{ opacity:0.5; cursor:not-allowed; }
 
     @media (max-width:640px){
       .wrap{ padding:24px 16px 48px; }
@@ -966,6 +1011,7 @@
 
       .hero-date{ font-size:22px; margin-top: 10px; }
       .hero-sub{ margin-bottom: 24px; }
+      .ot-hero-title{ font-size:22px; }
       
       .filters{ 
         display: grid;
@@ -977,7 +1023,7 @@
         width: 100%;
         min-width: 100%;
       }
-      .clear-btn, .reset-btn, .ot-submit-btn {
+      .clear-btn, .reset-btn {
         width: 100%;
         text-align: center;
       }
@@ -1313,8 +1359,18 @@
     </div>
   </div>
 
-  <!-- ========== OT VIEW (Summary + Submit) ========== -->
+  <!-- ========== OT VIEW (redesigned) ========== -->
   <div id="otView" style="display:none;">
+    <div class="ot-hero">
+      <div>
+        <div class="ot-hero-title">Overtime Tracker</div>
+        <div class="ot-hero-sub">Team OT summary for the selected period — payment rate ৳61/hour.</div>
+      </div>
+      <button type="button" class="ot-add-btn" id="openOTModalBtn">＋ Add OT Entry</button>
+    </div>
+
+    <div class="stat-row" id="otStatRow"></div>
+
     <div class="filters">
       <div class="field">
         <label for="otStartDate">Start Date</label>
@@ -1334,8 +1390,9 @@
       <table id="otSummaryTable">
         <thead>
           <tr>
-            <th>#</th>
+            <th style="width:50px;">#</th>
             <th>Agent Name</th>
+            <th>Entries</th>
             <th>Total OT Hours</th>
             <th>Amount (৳61/hr)</th>
           </tr>
@@ -1345,43 +1402,53 @@
       </table>
     </div>
     <div class="state-msg" id="otSummaryMsg" style="display:none;">No OT entries found in this date range.</div>
-
-    <div class="filters" style="margin-top:32px;">
-      <div class="field">
-        <label for="otDate">OT Date</label>
-        <input type="date" id="otDate">
-      </div>
-      <div class="field grow">
-        <label for="otName">Agent Name</label>
-        <select id="otName"><option value="">— Select agent —</option></select>
-      </div>
-      <div class="field">
-        <label for="otHours">Hours</label>
-        <select id="otHours">
-          <option value="">—</option>
-          <option value="0.5">0.5</option>
-          <option value="1">1</option>
-          <option value="1.5">1.5</option>
-          <option value="2">2</option>
-          <option value="2.5">2.5</option>
-          <option value="3">3</option>
-          <option value="3.5">3.5</option>
-          <option value="4">4</option>
-          <option value="4.5">4.5</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
-      </div>
-      <button class="ot-submit-btn" id="otSubmitBtn">Submit OT</button>
-    </div>
-    <div class="state-msg" id="otMsg" style="display:block; padding:20px;">
-      Fill the form and submit — data goes straight to the OT sheet. Payment: hours × ৳61.
-    </div>
   </div>
 
   <footer class="note">
     No login required — everyone can view this. Refresh the page after changes in the Sheet to see updated data.
   </footer>
+
+  <!-- ========== OT SUBMIT MODAL ========== -->
+  <div class="ot-modal-overlay" id="otModalOverlay" style="display:none;">
+    <div class="ot-modal">
+      <div class="ot-modal-header">
+        <span class="ot-modal-title">Add OT Entry</span>
+        <button type="button" class="ot-modal-close" id="otModalCloseX">&times;</button>
+      </div>
+      <div class="ot-modal-body">
+        <div class="field">
+          <label for="otDate">OT Date</label>
+          <input type="date" id="otDate">
+        </div>
+        <div class="field">
+          <label for="otName">Agent Name</label>
+          <select id="otName"><option value="">— Select agent —</option></select>
+        </div>
+        <div class="field">
+          <label for="otHours">Hours</label>
+          <select id="otHours">
+            <option value="">—</option>
+            <option value="0.5">0.5</option>
+            <option value="1">1</option>
+            <option value="1.5">1.5</option>
+            <option value="2">2</option>
+            <option value="2.5">2.5</option>
+            <option value="3">3</option>
+            <option value="3.5">3.5</option>
+            <option value="4">4</option>
+            <option value="4.5">4.5</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </div>
+      </div>
+      <div class="ot-modal-msg" id="otModalMsg"></div>
+      <div class="ot-modal-footer">
+        <button type="button" class="ot-modal-cancel" id="otModalCancel">Cancel</button>
+        <button type="button" class="ot-modal-save" id="otSubmitBtn">Save OT</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ========== CUSTOM HOLIDAY MULTI-SELECT MODAL ========== -->
   <div class="holiday-modal-overlay" id="holidayModalOverlay" style="display:none;">
@@ -1421,14 +1488,13 @@
 
   /* ==============================================================
      SHARED LOGIC & CONFIG
-     ⚠️ OT_API_URL: Apps Script Web App URL এখানে বসাও
      ============================================================== */
   const CONFIG = {
     SHEET_ID: "1qIhXOv2jU2pQagJbzkYms1vAQ9JPtAhwSNmibGfFZS4",
     SHEET_NAME: "Schedule",
     OT_SHEET_NAME: "Form_Responses",
     OT_RATE: 61,
-    OT_API_URL: "https://script.google.com/macros/s/AKfycbz5WAi6CPycGwv9VpdGIJA7dz2he96fk5S4ZY1IYFmA5SvQGdMaonR4ijsGSBMvuMXqAQ/exec",   // ← এখানে Apps Script Web App URL paste করো
+    OT_API_URL: "https://script.google.com/macros/s/AKfycbz5WAi6CPycGwv9VpdGIJA7dz2he96fk5S4ZY1IYFmA5SvQGdMaonR4ijsGSBMvuMXqAQ/exec",
     REFRESH_MS: 900000
   };
 
@@ -2158,6 +2224,26 @@
     return names[0] || agentKey;
   }
 
+  function agentRegionClass(agentKey){
+    const tally = {};
+    ALL_ROWS.filter(r => r.agentKey === agentKey).forEach(r => {
+      const c = regionPillClass(r.region);
+      if(c !== 'off' && c !== 'other') tally[c] = (tally[c] || 0) + 1;
+    });
+    const keys = Object.keys(tally).sort((a,b) => tally[b]-tally[a]);
+    return keys[0] || 'other';
+  }
+
+  function agentInitials(agentKey){
+    return agentDisplayName(agentKey).trim().split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase() || '?';
+  }
+
+  function setDefaultDates(){
+    const r = defaultRangeStrings();
+    document.getElementById('startDate').value = r.s;
+    document.getElementById('endDate').value = r.e;
+  }
+
   // Default range: 15th of previous month (or current month if today >= 16th) → today
   function defaultRangeStrings(){
     const today = new Date();
@@ -2170,12 +2256,6 @@
     const s = `${startYear}-${String(startMonth+1).padStart(2,'0')}-15`;
     const e = getSortKeyFromDate(today);
     return { s, e };
-  }
-
-  function setDefaultDates(){
-    const r = defaultRangeStrings();
-    document.getElementById('startDate').value = r.s;
-    document.getElementById('endDate').value = r.e;
   }
 
   function renderHistory(){
@@ -2521,7 +2601,7 @@
   document.getElementById('swapDate').addEventListener('change', renderSwap);
   document.getElementById('swapAgent').addEventListener('change', renderSwap);
 
-  /* ========== OT VIEW (Summary + Submit) ========== */
+  /* ========== OT VIEW (Summary + Modal Submit) ========== */
   function buildOTOptions(){
     const sel = document.getElementById('otName');
     if(!sel) return;
@@ -2540,9 +2620,6 @@
     sel.innerHTML = '<option value="">— Select agent —</option>' +
       entries.map(e => `<option value="${esc(e.key)}">${esc(e.name)}</option>`).join('');
     if(entries.some(e => e.key === current)) sel.value = current;
-
-    const dateEl = document.getElementById('otDate');
-    if(dateEl && !dateEl.value) dateEl.value = getSortKeyFromDate(new Date());
   }
 
   function setOTDefaultDates(){
@@ -2575,13 +2652,23 @@
     const msg = document.getElementById('otSummaryMsg');
     const shell = document.getElementById('otSummaryShell');
     const badge = document.getElementById('otSummaryBadge');
+    const statRow = document.getElementById('otStatRow');
 
-    document.getElementById('otSummaryBadge').textContent = `${rows.length} entries`;
+    const totalHours = list.reduce((s,[,a]) => s + a.hours, 0);
+    const totalAmount = Math.round(totalHours * CONFIG.OT_RATE);
+
+    /* stat chips */
+    statRow.innerHTML = `
+      <div class="stat-chip eu"><span class="n">${fmtHrs(Math.round(totalHours * 10) / 10)}</span><span class="l">Total OT Hours</span></div>
+      <div class="stat-chip glo"><span class="n">${fmtTk(totalAmount)}</span><span class="l">Total OT Payment</span></div>
+      <div class="stat-chip udp"><span class="n">${list.length}</span><span class="l">Agents with OT</span></div>
+    `;
+
+    badge.textContent = `${rows.length} entries`;
 
     if(!list.length){
       shell.style.display = 'none';
       msg.style.display = 'block';
-      badge.textContent = '0 entries';
       return;
     }
     shell.style.display = '';
@@ -2590,17 +2677,23 @@
     body.innerHTML = list.map(([key, a], i) => `
       <tr>
         <td style="color:var(--muted);">${i + 1}</td>
-        <td>${esc(a.name)}</td>
+        <td>
+          <span class="ot-agent-cell">
+            <span class="avatar ${agentRegionClass(key)}">${esc(agentInitials(key))}</span>
+            <span>${esc(a.name)}</span>
+          </span>
+        </td>
+        <td>${a.entries}</td>
         <td>${fmtHrs(Math.round(a.hours * 10) / 10)} hrs</td>
         <td style="font-weight:600; color:var(--emerald);">${fmtTk(Math.round(a.hours * CONFIG.OT_RATE))}</td>
       </tr>`).join('');
 
-    const totalHours = list.reduce((s,[,a]) => s + a.hours, 0);
     foot.innerHTML = `
       <tr>
         <td colspan="2">Total (${list.length} agent${list.length > 1 ? 's' : ''})</td>
+        <td>${rows.length}</td>
         <td>${fmtHrs(Math.round(totalHours * 10) / 10)} hrs</td>
-        <td style="color:var(--emerald);">${fmtTk(Math.round(totalHours * CONFIG.OT_RATE))}</td>
+        <td style="color:var(--emerald);">${fmtTk(totalAmount)}</td>
       </tr>`;
   }
 
@@ -2611,17 +2704,39 @@
     renderOTSummary();
   });
 
+  /* ---- OT Submit Modal ---- */
+  function openOTModal(){
+    const dateEl = document.getElementById('otDate');
+    if(!dateEl.value) dateEl.value = getSortKeyFromDate(new Date());
+    const msg = document.getElementById('otModalMsg');
+    msg.style.display = 'none';
+    msg.textContent = '';
+    msg.classList.remove('ok', 'err');
+    document.getElementById('otModalOverlay').style.display = 'flex';
+  }
+  function closeOTModal(){
+    document.getElementById('otModalOverlay').style.display = 'none';
+  }
+
+  document.getElementById('openOTModalBtn').addEventListener('click', openOTModal);
+  document.getElementById('otModalCloseX').addEventListener('click', closeOTModal);
+  document.getElementById('otModalCancel').addEventListener('click', closeOTModal);
+  document.getElementById('otModalOverlay').addEventListener('click', (e) => {
+    if(e.target.id === 'otModalOverlay') closeOTModal();
+  });
+
   document.getElementById('otSubmitBtn').addEventListener('click', async () => {
     const dateEl = document.getElementById('otDate');
     const nameEl = document.getElementById('otName');
     const hoursEl = document.getElementById('otHours');
-    const msg = document.getElementById('otMsg');
+    const msg = document.getElementById('otModalMsg');
     const btn = document.getElementById('otSubmitBtn');
 
     const show = (text, isErr) => {
       msg.style.display = 'block';
       msg.textContent = text;
-      msg.classList.toggle('error', !!isErr);
+      msg.classList.toggle('ok', !isErr);
+      msg.classList.toggle('err', !!isErr);
     };
 
     const date = dateEl.value;
@@ -2632,14 +2747,10 @@
       show('❌ Date, Agent Name and Hours — তিনটাই সিলেক্ট করতে হবে।', true);
       return;
     }
-    if(!CONFIG.OT_API_URL){
-      show('❌ Apps Script Web App URL এখনো বসানো হয়নি — CONFIG.OT_API_URL এ URL paste করো।', true);
-      return;
-    }
 
     const name = agentDisplayName(agentKey);
     btn.disabled = true;
-    btn.textContent = 'Submitting…';
+    btn.textContent = 'Saving…';
     try{
       await fetch(CONFIG.OT_API_URL, {
         method: 'POST',
@@ -2659,15 +2770,23 @@
         hours: hours
       });
 
-      show(`✅ OT saved: ${name} · ${dd} ${monthsShortEn[d.getMonth()]} · ${fmtHrs(hours)} hrs = ৳${Math.round(hours * CONFIG.OT_RATE)}`, false);
+      show(`✅ Saved: ${name} · ${dd} ${monthsShortEn[d.getMonth()]} · ${fmtHrs(hours)} hrs = ৳${Math.round(hours * CONFIG.OT_RATE)}`, false);
       hoursEl.value = '';
       renderHistory();
       renderOTSummary();
+
+      // সফল হলে একটু পরে modal বন্ধ
+      setTimeout(() => {
+        closeOTModal();
+        btn.disabled = false;
+        btn.textContent = 'Save OT';
+      }, 1400);
+      return;
     }catch(err){
       show('❌ Submit failed — internet connection check করে আবার try করো।', true);
     }
     btn.disabled = false;
-    btn.textContent = 'Submit OT';
+    btn.textContent = 'Save OT';
   });
 
   /* ========== MAIN LOAD ========== */
@@ -2770,6 +2889,8 @@
     renderHistory();
   });
 
+  // Initial Load & Auto Refresh
+  setOTDefaultDates();
   loadAll();
   setInterval(loadAll, CONFIG.REFRESH_MS);
 </script>
